@@ -15,6 +15,7 @@ public class CarsRepository
 
   internal List<Car> GetAllCars()
   {
+    // NOTE bringing in a car and account on each row from this sql statement, in that order
     string sql = @"
     SELECT
     cars.*,
@@ -22,6 +23,12 @@ public class CarsRepository
     FROM cars
     JOIN accounts ON cars.creatorId = accounts.id;";
 
+
+    // NOTE when there are multiple pieces of data sharing the same row in your sql statements, you must provide Dapper a type for each piece of data in the order they will be coming in.
+    // NOTE The first two type arguments are for the pieces of data coming in on the rows
+    // NOTE the third type argument will be the return type from our mapping function
+    // NOTE our mapping function will be run on each row returned from the sql statement. It must have parameters set up for the first two type arguments passed to Query
+    // NOTE our mapping function attacehs a creator object to each car
     List<Car> cars = _db.Query<Car, Account, Car>(sql, (car, account) =>
     {
       car.Creator = account;
@@ -63,6 +70,7 @@ public class CarsRepository
     JOIN accounts ON cars.creatorId = accounts.id
     WHERE cars.id = @carId;";
 
+
     Car car = _db.Query<Car, Account, Car>(sql, (car, account) =>
     {
       car.Creator = account;
@@ -91,8 +99,7 @@ public class CarsRepository
   internal void UpdateCar(Car car)
   {
     string sql = @"
-    UPDATE
-    cars
+    UPDATE cars
     SET
     make = @Make,
     model = @Model,

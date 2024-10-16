@@ -10,6 +10,7 @@ public class CarsService
     _repository = repository;
   }
 
+  // NOTE Each service should only have one dedicated repository
   private readonly CarsRepository _repository;
 
 
@@ -33,6 +34,7 @@ public class CarsService
     {
       throw new Exception($"Invalid car id: {carId}");
     }
+
     return car;
   }
 
@@ -45,6 +47,7 @@ public class CarsService
       throw new Exception("That ain't your car, pal");
     }
 
+    // NOTE no need to return data here, we just need to update the database
     _repository.DeleteCar(carId);
 
     return $"{car.Make} {car.Model} was deleted!";
@@ -58,11 +61,13 @@ public class CarsService
     {
       throw new Exception("Not your car, bud");
     }
-
+    // null coalescing operator (??) determines if the left-hand side value is null. If it is, it defaults to the right-hand side
     car.Make = carUpdateData.Make ?? car.Make;
     car.Model = carUpdateData.Model ?? car.Model;
+    // NOTE must allow number values to be nullable in the Car model for this check to work
     car.Price = carUpdateData.Price ?? car.Price;
     car.Year = carUpdateData.Year ?? car.Year;
+    // NOTE must allow boolean values to be nullable in the Car model for this check to work
     car.HasCleanTitle = carUpdateData.HasCleanTitle ?? car.HasCleanTitle;
 
     _repository.UpdateCar(car);

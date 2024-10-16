@@ -10,6 +10,7 @@ public class CarsController : ControllerBase
     _auth0Provider = auth0Provider;
   }
 
+  // NOTE you can have multiple dependencies for a single class. Make sure their values are assigned in the constructor
   private readonly CarsService _carsService;
   private readonly Auth0Provider _auth0Provider;
 
@@ -42,13 +43,18 @@ public class CarsController : ControllerBase
     }
   }
 
-  [Authorize]
+  // NOTE Authorize denotes that you must have a valid bearer token to access this endpoint
+  [Authorize] // .use(Auth0Provider)
   [HttpPost]
   public async Task<ActionResult<Car>> CreateCar([FromBody] Car carData)
   {
     try
     {
+      // NOTE GetUserInfoAsync method allows us to decode a bearer token
+      // Must be awaited, as this is an external call to an API
+      // HttpContext has information about our request and response. Includes headers from the request that contain bearer tokens from client
       Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext); // req.userInfo
+      // REVIEW never ever trust the client
       carData.CreatorId = userInfo.Id;
       Car car = _carsService.CreateCar(carData);
       return Ok(car);
