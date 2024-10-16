@@ -20,6 +20,7 @@ public class CarsService
 
   internal Car CreateCar(Car carData)
   {
-    throw new NotImplementedException();
+    Car car = _repository.CreateCar(carData);
+    return car;
   }
 }

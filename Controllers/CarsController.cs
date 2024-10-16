@@ -34,7 +34,8 @@ public class CarsController : ControllerBase
   {
     try
     {
-      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext); // req.userInfo
+      carData.CreatorId = userInfo.Id;
       Car car = _carsService.CreateCar(carData);
       return Ok(car);
     }
