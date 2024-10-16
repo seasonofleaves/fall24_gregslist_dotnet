@@ -28,6 +28,20 @@ public class CarsController : ControllerBase
     }
   }
 
+  [HttpGet("{carId}")]
+  public ActionResult<Car> GetCarById(int carId)
+  {
+    try
+    {
+      Car car = _carsService.GetCarById(carId);
+      return Ok(car);
+    }
+    catch (Exception exception)
+    {
+      return BadRequest(exception.Message);
+    }
+  }
+
   [Authorize]
   [HttpPost]
   public async Task<ActionResult<Car>> CreateCar([FromBody] Car carData)
@@ -44,4 +58,5 @@ public class CarsController : ControllerBase
       return BadRequest(error.Message);
     }
   }
+
 }
