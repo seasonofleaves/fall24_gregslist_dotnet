@@ -1,4 +1,5 @@
 
+
 namespace gregslist_csharp.Services;
 
 public class CarsService
@@ -15,5 +16,10 @@ public class CarsService
   {
     List<Car> cars = _repository.GetAllCars();
     return cars;
+  }
+
+  internal Car CreateCar(Car carData)
+  {
+    throw new NotImplementedException();
   }
 }
