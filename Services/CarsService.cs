@@ -28,6 +28,11 @@ public class CarsService
   internal Car GetCarById(int carId)
   {
     Car car = _repository.GetCarById(carId);
+
+    if (car == null)
+    {
+      throw new Exception($"Invalid car id: {carId}");
+    }
     return car;
   }
 }
