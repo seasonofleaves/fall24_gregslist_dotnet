@@ -77,4 +77,31 @@ public class CarsRepository
       throw new Exception($"{rowsAffected} cars were deleted! Uh oh");
     }
   }
+
+  internal void UpdateCar(Car car)
+  {
+    string sql = @"
+    UPDATE
+    cars
+    SET
+    make = @Make,
+    model = @Model,
+    year = @Year,
+    price = @Price,
+    hasCleanTitle = @HasCleanTitle
+    WHERE id = @Id
+    LIMIT 1;";
+
+    int rowsAffected = _db.Execute(sql, car);
+
+    if (rowsAffected == 0)
+    {
+      throw new Exception("No cars were updated");
+    }
+
+    if (rowsAffected > 1)
+    {
+      throw new Exception($"{rowsAffected} cars were updated! Uh oh");
+    }
+  }
 }

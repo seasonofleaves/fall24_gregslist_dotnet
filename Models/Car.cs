@@ -13,10 +13,11 @@ public class Car
   public string Model { get; set; }
 
   [Range(1886, 2025)]
-  public uint Year { get; set; }
+  public uint? Year { get; set; }
 
   [Range(0, 1000000)]
-  public uint Price { get; set; }
+  // NOTE ? allows property to default to null instead of 0
+  public uint? Price { get; set; }
 
   [MaxLength(500)]
   public string ImgUrl { get; set; }
@@ -33,7 +34,8 @@ public class Car
   public uint Mileage { get; set; }
 
   // NOTE defaults to true if not present in object being cast into this class
-  public bool HasCleanTitle { get; set; } = true;
+  // public bool HasCleanTitle { get; set; } = true;
+  public bool? HasCleanTitle { get; set; }
 
   public string CreatorId { get; set; }
   public Account Creator { get; set; }

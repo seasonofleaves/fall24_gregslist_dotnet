@@ -74,4 +74,20 @@ public class CarsController : ControllerBase
       return BadRequest(error.Message);
     }
   }
+
+  [Authorize]
+  [HttpPut("{carId}")]
+  public async Task<ActionResult<Car>> UpdateCar(int carId, [FromBody] Car carUpdateData)
+  {
+    try
+    {
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      Car car = _carsService.UpdateCar(carId, userInfo.Id, carUpdateData);
+      return Ok(car);
+    }
+    catch (Exception error)
+    {
+      return BadRequest(error.Message);
+    }
+  }
 }
