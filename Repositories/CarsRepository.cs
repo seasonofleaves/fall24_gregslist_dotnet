@@ -44,9 +44,19 @@ public class CarsRepository
 
   internal Car GetCarById(int carId)
   {
-    string sql = "SELECT * FROM cars WHERE id = @carId;";
+    string sql = @"
+    SELECT
+    cars.*,
+    accounts.*
+    FROM cars
+    JOIN accounts ON cars.creatorId = accounts.id
+    WHERE cars.id = @carId;";
 
-    Car car = _db.Query<Car>(sql, new { carId }).FirstOrDefault();
+    Car car = _db.Query<Car, Account, Car>(sql, (car, account) =>
+    {
+      car.Creator = account;
+      return car;
+    }, new { carId }).FirstOrDefault();
     return car;
   }
 }
