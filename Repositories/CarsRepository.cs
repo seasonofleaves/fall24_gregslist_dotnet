@@ -1,6 +1,7 @@
 
 
 
+
 namespace gregslist_csharp.Repositories;
 
 public class CarsRepository
@@ -58,5 +59,22 @@ public class CarsRepository
       return car;
     }, new { carId }).FirstOrDefault();
     return car;
+  }
+
+  internal void DeleteCar(int carId)
+  {
+    string sql = "DELETE FROM cars WHERE id = @carId LIMIT 1;";
+
+    int rowsAffected = _db.Execute(sql, new { carId });
+
+    if (rowsAffected == 0)
+    {
+      throw new Exception("No cars were deleted");
+    }
+
+    if (rowsAffected > 1)
+    {
+      throw new Exception($"{rowsAffected} cars were deleted! Uh oh");
+    }
   }
 }
