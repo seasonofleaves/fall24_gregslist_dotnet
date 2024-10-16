@@ -13,6 +13,8 @@ CREATE TABLE
     -- Every table's first column should be an id
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     -- we will set up stricter validation with our C# model
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
     make VARCHAR(255) NOT NULL,
     model VARCHAR(255) NOT NULL,
     year SMALLINT UNSIGNED NOT NULL,

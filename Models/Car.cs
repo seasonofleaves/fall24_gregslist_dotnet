@@ -5,6 +5,8 @@ namespace gregslist_csharp.Models;
 public class Car
 {
   public int Id { get; set; }
+  public DateTime CreatedAt { get; set; }
+  public DateTime UpdatedAt { get; set; }
 
   [MinLength(3), MaxLength(50)]
   public string Make { get; set; }
