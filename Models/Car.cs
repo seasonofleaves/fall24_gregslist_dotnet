@@ -36,4 +36,5 @@ public class Car
   public bool HasCleanTitle { get; set; } = true;
 
   public string CreatorId { get; set; }
+  public Account Creator { get; set; }
 }

@@ -48,7 +48,7 @@ VALUES
   (
     'mazda',
     'miata',
-    2008,
+    2009,
     6000,
     'https://images.unsplash.com/photo-1725199583250-9f59567ba965?q=80&w=2126&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     'jeremys car',
@@ -58,3 +58,10 @@ VALUES
     true,
     '65f87bc1e02f1ee243874743'
   );
+
+SELECT
+  cars.*,
+  accounts.*
+FROM
+  cars
+  JOIN accounts ON cars.creatorId = accounts.id;
