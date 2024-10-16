@@ -12,6 +12,9 @@ public class CarsRepository
 
   internal List<Car> GetAllCars()
   {
-    return [];
+    string sql = "SELECT * FROM cars;";
+
+    List<Car> cars = _db.Query<Car>(sql).ToList();
+    return cars;
   }
 }
